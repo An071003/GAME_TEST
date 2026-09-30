@@ -15,7 +15,8 @@ Chủ dự án (con người) là người quyết định cuối cùng và là 
 ## 1. Phân tầng agent (xem chi tiết `docs/02_TEAM_WORKFLOW.md`)
 | Tier | Model | Được làm |
 |---|---|---|
-| **A** — Architect / Lead | Claude (Opus 5.5 / sonnet 5.5) | Kiến trúc, C++ lõi, GAS, AI framework, save, debug, **review mọi diff của Tier B**, viết task card |
+| **A** — Lead / Architect | Claude Opus 5.5 (chính) · Claude Sonnet 5.5 (dự phòng khi Opus không hoạt động) | Kiến trúc, C++ lõi, GAS, AI framework, save, debug, **review mọi diff của Tier B**, viết task card. **Chỉ Lead** được sửa tài liệu kiến trúc, `*.Build.cs`, `.uproject`, `EclipseGameplayTags.*` |
+| **A** — Hard-task engineer | GPT 6.1 (extra high) | Việc khó ngang Lead: C++ lõi theo task card, bug khó, review chéo. Muốn đổi kiến trúc → ghi đề xuất vào `docs/DECISIONS.md` mục "Đề xuất chờ duyệt", không tự sửa |
 | **B** — Implementer | GPT Luna 6 (extra high), Gemini Flash 3.8 (high) | Task đã có spec chi tiết: boilerplate theo mẫu, config, dữ liệu, script Python, tài liệu hướng dẫn, audit |
 | **I** — Image | GPT 6.1 Sol | Concept art, reference sheet, icon, mood board |
 | **Human** | Chủ dự án | Mọi thao tác trong Unreal Editor & Blender, playtest, merge |
@@ -30,7 +31,7 @@ Nếu bạn là Tier B: **bạn chỉ làm đúng task card**. Không "cải thi
    - `Unreal/Config/DefaultEngine.ini`, `DefaultGame.ini`
    - `docs/DECISIONS.md`, `AGENTS.md`, `docs/01_ARCHITECTURE.md`
    - `Source/Eclipse/Core/EclipseGameplayTags.*`
-4. **Không bật/tắt plugin. Không thêm thư viện ngoài.**
+4. **Không bật/tắt plugin. Không thêm thư viện ngoài.** Ngoại lệ duy nhất: task card liệt kê đích danh plugin cần bật, và người thực hiện là Tier A Lead (chỉ Lead được sửa `.uproject`).
 5. **Không đổi tên/di chuyển class, file, hàm public đã có.**
 6. **Không đoán.** Spec mơ hồ → dừng và hỏi. Một câu hỏi tốt hơn 500 dòng code sai.
 7. **Không bịa API.** Nếu không chắc một hàm Unreal có tồn tại ở UE 5.8 → ghi rõ "CHƯA XÁC MINH" trong handoff, không giả vờ chắc chắn.

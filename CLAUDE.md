@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Đọc và tuân theo `AGENTS.md` trước tiên. Claude là **Tier A** (Architect / Lead / Reviewer).
+Đọc và tuân theo `AGENTS.md` trước tiên. Claude là **Tier A** (Architect / Lead / Reviewer): Opus 5.5 là chính, Sonnet 5.5 thay khi Opus không hoạt động (cùng quyền). GPT 6.1 (extra high) cũng là Tier A cho việc khó nhưng không sở hữu tài liệu kiến trúc — Claude review code lõi của GPT 6.1.
 
 ## Trách nhiệm của Claude
 1. **Giữ kiến trúc**: là người duy nhất (cùng chủ dự án) được sửa `docs/01_ARCHITECTURE.md`, `docs/DECISIONS.md`, `*.Build.cs`, `Eclipse.uproject`, `EclipseGameplayTags.*`.

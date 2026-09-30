@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | TODO |
+| Status | IN_PROGRESS |
 | Milestone | M0 |
 | Tier | Human (Claude hỗ trợ xác minh) |
 | Phụ thuộc | — |
@@ -24,5 +24,7 @@ Visual Studio 2026 build được project C++ UE 5.8.
 
 ---
 ## Handoff
-- MSVC:
-- Windows SDK:
+- MSVC: 14.51.36231 (VS Community 2026 18.10.3). Nguồn đối chiếu: `UE_5.8/Engine/Config/Windows/Windows_SDK.json` — Preferred 14.50.35717+ / 14.44.35207+; Banned 14.50.0-14.50.35722, 14.44.0-14.44.35210, 14.40-14.43, 14.39; Minimum 14.38.33130. 14.51 hợp lệ nhưng không nằm trong Preferred.
+- Windows SDK: 10.0.26100.0 (UE: MainVersion 10.0.22621.0, Min 10.0.19041.0, Max 10.9.99999.0 → hợp lệ, không phải bản "main").
+- Workload NativeGame: đã cài (vswhere xác nhận).
+- Còn lại: T-003 build PASS mới đóng T-001. Nếu lỗi toolchain → cài component `Microsoft.VisualStudio.Component.VC.14.50.18.0.x86.x64`.

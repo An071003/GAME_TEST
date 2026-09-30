@@ -8,6 +8,7 @@ Unreal/Plugins/*/Binaries/
 Unreal/Plugins/*/Intermediate/
 Unreal/.vs/
 Unreal/*.sln
+Unreal/*.slnx
 Unreal/*.VC.db
 Unreal/*.opensdf
 Unreal/*.sdf

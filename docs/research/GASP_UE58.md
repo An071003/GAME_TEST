@@ -18,14 +18,19 @@
 ---
 
 ## 2. Dung lượng tải về và dung lượng đĩa
-- **Dung lượng tải về (Vault Cache qua Epic Games Launcher):** Khoảng **~5.56 GB**.
-- **Dung lượng trên đĩa sau khi tạo project:**
-  - Thư mục project mẫu (`Content/`, `Config/`, `Source/`): Khoảng **~5.5 GB – 6.0 GB**.
-  - Bộ nhớ đệm Derived Data Cache (DDC) sinh ra khi mở và compile animation database lần đầu: Khoảng **~3.0 GB – 5.0 GB**.
-  - **Tổng dung lượng đĩa tiêu tốn nếu giữ cả Vault Cache và project mẫu:** Khoảng **~11.0 GB – 15.0 GB**.
-- **Cảnh báo phần cứng (đối chiếu [05_HARDWARE_AND_DISK.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/05_HARDWARE_AND_DISK.md)):** Ổ C máy dev hiện chỉ còn ~113 GB trống. Việc tải trực tiếp cả project vào ổ C sẽ chiếm hơn 10% dung lượng còn lại. Cần tạo project ở thư mục tạm hoặc ổ ngoài, chỉ migrate asset cần thiết vào `Unreal/Content`.
+- **Trạng thái:** **[CHƯA XÁC MINH CHÍNH XÁC]** — Nguồn Fab không hiển thị kích thước file tải trước khi thêm vào launcher.
+- **Số liệu ước tính (tham khảo từ cộng đồng khi chạy sample project UE5):**
+  - **Dung lượng tải về (Vault Cache qua Epic Games Launcher):** Ước tính khoảng **~5.5 GB – 6.0 GB**.
+  - **Dung lượng trên đĩa sau khi tạo project:**
+    - Thư mục project mẫu (`Content/`, `Config/`, `Source/`): Khoảng **~5.5 GB – 6.0 GB**.
+    - Bộ nhớ đệm Derived Data Cache (DDC) sinh ra khi mở và compile animation database lần đầu: Khoảng **~3.0 GB – 5.0 GB**.
+    - **Tổng dung lượng đĩa ước tính nếu giữ cả Vault Cache và project mẫu:** Khoảng **~11.0 GB – 15.0 GB**.
+- **Quy tắc chung của Epic Games:** Các sample project độ phức tạp cao kèm nhiều animation dữ liệu lớn thường yêu cầu dự phòng từ **20 GB – 30 GB SSD** để unpack, build DDC và compile shader ổn định.
+- **Cảnh báo phần cứng (đối chiếu [05_HARDWARE_AND_DISK.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/05_HARDWARE_AND_DISK.md)):** Ổ C máy dev hiện chỉ còn ~113 GB trống. Việc tải cả project vào ổ C có thể chiếm 10%–15% dung lượng còn lại. Bắt buộc tạo project ở thư mục tạm hoặc ổ ngoài, chỉ migrate asset cần thiết vào `Unreal/Content` (tuân thủ ADR-009).
+- **Hành động kiểm chứng (Con người):** Xác nhận dung lượng download thực tế hiển thị trên Epic Games Launcher khi bấm tải về.
 - **Nguồn xác minh:**
-  - [Unreal Engine Forums: Game Animation Sample download and disk footprint discussion](https://forums.unrealengine.com)
+  - [Fab Listing: Game Animation Sample](https://www.fab.com/listings/880e319a-a59e-4ed2-b268-b32dac7fa016)
+  - [Epic Games Launcher Storage Recommendations](https://dev.epicgames.com/documentation/en-us/unreal-engine/installing-unreal-engine)
 
 ---
 
@@ -92,38 +97,42 @@ Theo hướng dẫn của Epic và thực tiễn cộng đồng, quy trình th�
 
 ## 6. Phân tích Skeleton của GASP
 - **Tên asset Skeleton:** `UEFN_Mannequin` (nằm tại thư mục `Content/Characters/UEFN_Mannequin/`).
-- **So sánh với UE5 Mannequin chuẩn (`SK_Mannequin` / Manny & Quinn):**
-  - **Hoàn toàn đồng nhất về cấu trúc xương (Bone Hierarchy & Joint Orientations):** Sử dụng chung hệ xương tiêu chuẩn của UE5 (root, pelvis, spine_01 $\rightarrow$ spine_05, clavicle, upperarm, lowerarm, hand, thighed, calf, foot, ball).
-  - **Giữ nguyên hệ thống xương IK:** Đầy đủ `ik_foot_root`, `ik_foot_l`, `ik_foot_r`, `ik_hand_root`, `ik_hand_gun`, `ik_hand_l`, `ik_hand_r`.
-  - **Kết luận:** Đây **KHÔNG** phải là một biến thể dị biệt về hierarchy. Tiền tố `UEFN_` phản ánh việc Epic dùng chung chuẩn skeleton giữa Unreal Editor for Fortnite và Unreal Engine.
-  - **Độ tương thích với Eclipse:** Phù hợp 100% với quyết định [DECISIONS.md ADR-006](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/DECISIONS.md#adr-006). Mesh nhân vật mô hình hóa từ Blender theo skeleton UE5 Mannequin có thể gắn trực tiếp hoặc retarget 1:1 sang hệ xương này mà không cần điều chỉnh bone map phức tạp.
+- **Cấu trúc xương:** Dựa trên cấu trúc xương chuẩn của UE5 Mannequin (Pelvis, Spine, Clavicle, Limbs, các xương IK `ik_foot_root`, `ik_hand_root`...).
+- **Trạng thái tương thích:** **[CHƯA XÁC MINH TRỰC TIẾP TRONG EDITOR]**
+  - **Sự thật đã biết:** `UEFN_Mannequin` là một asset skeleton riêng biệt, không phải cùng một asset file `SK_Mannequin` mặc định của UE5. Trong project GASP, Epic cung cấp sẵn IK Retargeter (`RTG_UEFN_to_UE5` và `RTG_UEFN_to_UE4`), điều này cho thấy có sự khác biệt nhất định về bind pose, bone proportions hoặc danh sách twist bones giữa 2 hệ xương.
+  - **Kết luận cần đính chính:** Nhận định trước đây cho rằng *"hoàn toàn đồng nhất 100% và mesh Blender theo SK_Mannequin có thể gắn trực tiếp không cần retarget"* là **chưa được kiểm chứng thực tế trong Unreal Editor 5.8**.
+  - **Hành động kiểm chứng (Con người):**
+    1. Khi tải project GASP, mở asset skeleton `UEFN_Mannequin` và kiểm tra bone tree so với `SK_Mannequin`.
+    2. Kiểm tra asset `RTG_UEFN_to_UE5` có sẵn trong GASP: nếu cần, phương án an toàn nhất theo chuẩn của Epic là dùng chính Retargeter này để chuyển toàn bộ locomotion animation sang `SK_Mannequin` của Eclipse thay vì ép dùng chung skeleton asset.
 - **Nguồn xác minh:**
   - [Epic Docs: Adding a MetaHuman to the Game Animation Sample Project](https://dev.epicgames.com/documentation/en-us/unreal-engine/adding-a-metahuman-to-the-game-animation-sample-project-in-unreal-engine)
-  - [Epic Developer Community: Skeletons in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/skeletons-in-unreal-engine)
+  - [Epic Developer Community: IK Rig and Retargeting in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/ik-rig-animation-retargeting-in-unreal-engine)
 
 ---
 
 ## 7. Đánh giá Hiệu năng & Chi phí CPU (Motion Matching)
-- **Chi phí CPU Worker Thread (Locomotion Selection Cost):**
-  - Thuật toán tìm kiếm pose (Motion Matching Selection) tốn khoảng **~0.20 – 0.25 ms / character / frame**. So với State Machine truyền thống (~0.008 ms), bước chọn pose của Motion Matching tốn gấp **~25–30 lần**.
-  - Tuy nhiên, **tổng chi phí animation luồng phụ (Total Animation Worker Cost)** lại tương đương: Motion Matching tiêu thụ khoảng **~0.50 ms / character**, trong khi State Machine phức tạp (kèm Aim Offset, PoseDriver, Control Rig, Layered Blend) tiêu thụ khoảng **~0.43 ms / character**.
-- **Rủi ro hiệu năng cho Eclipse:**
-  - [05_HARDWARE_AND_DISK.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/05_HARDWARE_AND_DISK.md) đặt mục tiêu: **Game thread $\le$ 6 ms**, chạy trên CPU i7-13620H.
-  - Với nhân vật người chơi (Player): Chi phí ~0.25 ms là hoàn toàn chấp nhận được và mang lại chuyển động mượt mà vượt trội.
-  - Với quái/enemy số lượng đông (từ 5–10 quái cùng lúc trong màn chơi): Nếu tất cả đều chạy Motion Matching không kiểm soát, CPU sẽ quá tải.
-- **Biện pháp tối ưu bắt buộc:**
-  1. Sử dụng **Chooser Table** để phân vùng Pose Search Database (chỉ tìm kiếm trong database đi bộ khi đang đi bộ, không quét toàn bộ 500+ animation).
-  2. Bật **Animation Update Rate Optimization (URO)** để giảm tần suất tick animation của quái ở cự ly xa camera.
-  3. Sử dụng **Motion Matching Database LOD** có sẵn trong GASP cho các đối tượng phụ.
+- **Trạng thái:** **[CHƯA XÁC MINH TRÊN MÁY DEV / UE 5.8 - SỐ LIỆU THAM KHẢO TỪ PROFILING CỘNG ĐỒNG]**
+- **Số liệu tham khảo (từ các bài thuyết trình kỹ thuật Unreal Fest & profiling cộng đồng):**
+  - Chi phí Pose Selection trên Worker Thread: Dao động khoảng **~0.10 ms – 0.50 ms / character / frame** (tùy thuộc vào số channels trong `PoseSearchSchema` và số poses trong database).
+  - So sánh: Bước tìm kiếm pose đắt hơn nhiều so với việc đánh giá State Machine đơn giản (~0.008 ms), nhưng tổng chi phí worker thread cho toàn bộ pipeline animation (bao gồm cả blending, procedural IK) thường ở mức tương đương (~0.4 – 0.6 ms) vì Motion Matching giảm bớt các node xử lý phức tạp khác.
+- **Rủi ro kỹ thuật cho Eclipse:**
+  - Chưa có benchmark thực tế trên CPU của máy dev (Intel Core i7-13620H) với phiên bản UE 5.8.
+  - Mục tiêu hiệu năng ([05_HARDWARE_AND_DISK.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/05_HARDWARE_AND_DISK.md)): **Game thread $\le$ 6 ms**. Nếu spawn 5–10 AI Enemy đồng thời đều chạy Pose Search không kiểm soát, worker thread và game thread có thể bị nghẽn.
+- **Biện pháp tối ưu đề xuất (dựa trên tài liệu Epic):**
+  1. Phân vùng Database bằng **Chooser Table** (chỉ query database nhỏ tương ứng với Gait hiện tại).
+  2. Bật **Animation Update Rate Optimization (URO)** để giảm tần suất tick animation của enemy ở xa.
+  3. Sử dụng Database LOD hoặc chuyển AI quái thường sang State Machine truyền thống / Inertialization.
+- **Hành động kiểm chứng (Tier A / Con người):** Dùng công cụ **Unreal Insights** (kênh `Cpu`, `Animation`, `PoseSearch`) trực tiếp trên máy dev khi triển khai 1 Player và 3–5 Enemy để đo đạc thông số thực tế trước khi chốt kiến trúc locomotion cho AI.
 - **Nguồn xác minh:**
-  - [Unreal Engine Forums: Performance Profiling Motion Matching vs State Machines](https://forums.unrealengine.com)
   - [Epic Docs: Animation Debugging and Optimization in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-debugging-and-optimization-in-unreal-engine)
+  - [Epic Games Presentation: Motion Matching in Unreal Engine 5 (Unreal Fest)](https://dev.epicgames.com/community/learning)
 
 ---
 
 ## 8. Khuyến nghị cho Eclipse (≤ 10 dòng)
-1. **Dùng GASP cho Player Locomotion:** Hoàn toàn khả thi, skeleton khớp 100% với ADR-006, miễn phí bản quyền thương mại.
-2. **Không tải trực tiếp vào repo:** Tải GASP về thư mục tạm trên máy/ổ ngoài, không commit project mẫu vào Git để tiết kiệm 113 GB đĩa (ADR-009).
-3. **Chỉ migrate locomotion cốt lõi:** Chỉ trích xuất `ABP_SandboxCharacter`, Chooser Table `CHT_PoseSearchDatabases` và các anim cơ bản; **tuyệt đối không** migrate Mover, Traversal hay SmartObjects.
-4. **Chỉ bật 7 plugin cốt lõi:** Bật nhóm 4A trong `Eclipse.uproject` (PoseSearch, Chooser, MotionTrajectory, AnimationWarping, MotionWarping, AnimationLocomotionLibrary, BlendStack).
-5. **Enemy dùng State Machine hoặc Database thu gọn:** Giữ budget Game thread $\le$ 6 ms bằng cách chỉ áp dụng Motion Matching đầy đủ cho Player và Boss; quái thường nên dùng State Machine hoặc Database rút gọn kết hợp URO.
+1. **Dùng GASP cho Player Locomotion:** Hướng đi đúng (ADR-007), miễn phí bản quyền thương mại theo Fab Standard License.
+2. **Kiểm tra Skeleton trong Editor:** Mở `UEFN_Mannequin` kiểm tra; ưu tiên dùng IK Retargeter `RTG_UEFN_to_UE5` có sẵn để xuất animation sang `SK_Mannequin` chuẩn của Eclipse thay vì ép dùng chung asset.
+3. **Không tải trực tiếp vào repo:** Tải GASP về thư mục tạm/ổ ngoài để bảo vệ dung lượng SSD ~113 GB còn lại (ADR-009).
+4. **Chỉ migrate locomotion cốt lõi:** Chỉ lấy `ABP_SandboxCharacter`, Chooser Table và database locomotion; không migrate Mover hay Traversal.
+5. **Chỉ bật 7 plugin cốt lõi:** Bật 7 plugin nhóm 4A trong `Eclipse.uproject`.
+6. **Benchmark hiệu năng bằng Unreal Insights:** Không áp dụng Motion Matching cho quái thường nếu chưa profile thực tế trên máy dev; dự phòng dùng State Machine + URO cho Enemy.

@@ -34,8 +34,14 @@ Trả lời từng câu dưới đây, **mỗi câu kèm link nguồn** (trang E
 ---
 ## Handoff
 - **Đã sửa/tạo:**
-  - `docs/research/GASP_UE58.md` (tạo mới, báo cáo chi tiết đủ 7 câu hỏi kèm link nguồn và mục khuyến nghị 5 dòng).
-  - `docs/tasks/T-005-gasp-research.md` (cập nhật Status sang REVIEW, đánh dấu hoàn thành checklist và điền Handoff).
+  - [docs/research/GASP_UE58.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/research/GASP_UE58.md) (cập nhật gắn nhãn `[CHƯA XÁC MINH]` cho dung lượng, độ tương thích skeleton trực tiếp, và số liệu hiệu năng CPU kèm nguồn tài liệu và các bước kiểm chứng).
+  - [docs/tasks/T-005-gasp-research.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/tasks/T-005-gasp-research.md) (cập nhật nội dung handoff minh bạch, giữ nguyên status REVIEW).
 - **Build:** N/A (task nghiên cứu tài liệu, không thay đổi source code C++).
-- **Những gì CHƯA làm / CHƯA XÁC MINH:** Không có. Toàn bộ 7 câu hỏi đều được xác minh trực tiếp qua tài liệu chính thức của Epic Games và Fab.
-- **Việc con người cần làm trong Editor:** Chưa cần thao tác gì trong Editor. Đọc báo cáo [docs/research/GASP_UE58.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/research/GASP_UE58.md) để chốt phương án migrate locomotion khi triển khai milestone locomotion/character.
+- **Những gì CHƯA làm / CHƯA XÁC MINH:**
+  1. *Dung lượng file tải chính xác:* Fab không công bố dung lượng trước khi tải; con số ~5.5–6.0 GB tải và ~11–15 GB đĩa là số liệu ước tính từ cộng đồng khi chạy sample project.
+  2. *Độ tương thích skeleton UEFN_Mannequin vs SK_Mannequin:* Chưa inspect trực tiếp trong Editor 5.8; việc GASP cung cấp sẵn IK Retargeter `RTG_UEFN_to_UE5` cho thấy có sự khác biệt giữa hai asset skeleton, cần retarget thay vì khẳng định có thể dùng chung trực tiếp 100%.
+  3. *Số liệu benchmark CPU Motion Matching:* Các số liệu ~0.25 ms và ~0.50 ms là tham khảo từ bài thuyết trình kỹ thuật Unreal Fest / profiling cộng đồng; chưa benchmark thực tế bằng Unreal Insights trên CPU máy dev (Intel Core i7-13620H) và UE 5.8.
+- **Việc con người cần làm trong Editor:**
+  1. Xác nhận dung lượng tải thực tế hiển thị trên Epic Games Launcher khi tải GASP.
+  2. Mở asset skeleton `UEFN_Mannequin` và kiểm tra asset `RTG_UEFN_to_UE5` trong Unreal Editor để quyết định dùng IK Retargeter sang `SK_Mannequin` của Eclipse.
+  3. Dùng Unreal Insights profile CPU cost thực tế khi bắt đầu đưa Player và Enemy vào màn chơi.

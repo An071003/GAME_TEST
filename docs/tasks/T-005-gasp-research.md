@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | TODO |
+| Status | REVIEW |
 | Milestone | M0 |
 | Tier | B |
 | Gợi ý model | Gemini Flash 3.8 (có web search) |
@@ -28,8 +28,14 @@ Trả lời từng câu dưới đây, **mỗi câu kèm link nguồn** (trang E
 7. Các vấn đề hiệu năng đã biết (CPU cost Motion Matching) — nếu có số liệu.
 
 ## Tiêu chí hoàn thành
-- [ ] File `docs/research/GASP_UE58.md` trả lời đủ 7 câu, mỗi câu có link hoặc ghi "KHÔNG TÌM THẤY NGUỒN".
-- [ ] Có mục cuối "Khuyến nghị" ≤ 10 dòng.
+- [x] File `docs/research/GASP_UE58.md` trả lời đủ 7 câu, mỗi câu có link hoặc ghi "KHÔNG TÌM THẤY NGUỒN".
+- [x] Có mục cuối "Khuyến nghị" ≤ 10 dòng.
 
 ---
 ## Handoff
+- **Đã sửa/tạo:**
+  - `docs/research/GASP_UE58.md` (tạo mới, báo cáo chi tiết đủ 7 câu hỏi kèm link nguồn và mục khuyến nghị 5 dòng).
+  - `docs/tasks/T-005-gasp-research.md` (cập nhật Status sang REVIEW, đánh dấu hoàn thành checklist và điền Handoff).
+- **Build:** N/A (task nghiên cứu tài liệu, không thay đổi source code C++).
+- **Những gì CHƯA làm / CHƯA XÁC MINH:** Không có. Toàn bộ 7 câu hỏi đều được xác minh trực tiếp qua tài liệu chính thức của Epic Games và Fab.
+- **Việc con người cần làm trong Editor:** Chưa cần thao tác gì trong Editor. Đọc báo cáo [docs/research/GASP_UE58.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/research/GASP_UE58.md) để chốt phương án migrate locomotion khi triển khai milestone locomotion/character.

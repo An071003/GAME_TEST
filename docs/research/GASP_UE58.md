@@ -18,19 +18,22 @@
 ---
 
 ## 2. Dung lượng tải về và dung lượng đĩa
-- **Trạng thái:** **[CHƯA XÁC MINH CHÍNH XÁC]** — Nguồn Fab không hiển thị kích thước file tải trước khi thêm vào launcher.
-- **Số liệu ước tính (tham khảo từ cộng đồng khi chạy sample project UE5):**
-  - **Dung lượng tải về (Vault Cache qua Epic Games Launcher):** Ước tính khoảng **~5.5 GB – 6.0 GB**.
-  - **Dung lượng trên đĩa sau khi tạo project:**
-    - Thư mục project mẫu (`Content/`, `Config/`, `Source/`): Khoảng **~5.5 GB – 6.0 GB**.
-    - Bộ nhớ đệm Derived Data Cache (DDC) sinh ra khi mở và compile animation database lần đầu: Khoảng **~3.0 GB – 5.0 GB**.
-    - **Tổng dung lượng đĩa ước tính nếu giữ cả Vault Cache và project mẫu:** Khoảng **~11.0 GB – 15.0 GB**.
-- **Quy tắc chung của Epic Games:** Các sample project độ phức tạp cao kèm nhiều animation dữ liệu lớn thường yêu cầu dự phòng từ **20 GB – 30 GB SSD** để unpack, build DDC và compile shader ổn định.
-- **Cảnh báo phần cứng (đối chiếu [05_HARDWARE_AND_DISK.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/05_HARDWARE_AND_DISK.md)):** Ổ C máy dev hiện chỉ còn ~113 GB trống. Việc tải cả project vào ổ C có thể chiếm 10%–15% dung lượng còn lại. Bắt buộc tạo project ở thư mục tạm hoặc ổ ngoài, chỉ migrate asset cần thiết vào `Unreal/Content` (tuân thủ ADR-009).
-- **Hành động kiểm chứng (Con người):** Xác nhận dung lượng download thực tế hiển thị trên Epic Games Launcher khi bấm tải về.
-- **Nguồn xác minh:**
-  - [Fab Listing: Game Animation Sample](https://www.fab.com/listings/880e319a-a59e-4ed2-b268-b32dac7fa016)
-  - [Epic Games Launcher Storage Recommendations](https://dev.epicgames.com/documentation/en-us/unreal-engine/installing-unreal-engine)
+- **Trạng thái:** **[CHƯA XÁC MINH - KHÔNG TÌM THẤY NGUỒN CHÍNH THỨC CÔNG BỐ DUNG LƯỢNG]**
+  - Trang Fab của Game Animation Sample không hiển thị kích thước file tải hay dung lượng chiếm dụng trên đĩa.
+  - **Số liệu ước tính từ cộng đồng:**
+    - Dung lượng tải về (Vault Cache): Ước tính khoảng **~5.5 GB – 6.0 GB**.
+    - Dung lượng thư mục project mẫu sau khi tạo: Khoảng **~5.5 GB – 6.0 GB**.
+    - Bộ nhớ đệm Derived Data Cache (DDC) khi mở project lần đầu: Khoảng **~3.0 GB – 5.0 GB**.
+    - Tổng dung lượng ước tính nếu giữ cả Vault Cache và project mẫu: Khoảng **~11.0 GB – 15.0 GB**.
+    - *Lưu ý: Các con số trên là ước tính truyền miệng từ người dùng cộng đồng khi chạy sample project UE5, hoàn toàn chưa có tài liệu hay công bố chính thức từ Epic Games.*
+- **Cảnh báo phần cứng & lưu trữ (đối chiếu [05_HARDWARE_AND_DISK.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/05_HARDWARE_AND_DISK.md)):**
+  - Ổ C: máy dev hiện còn **~148 GB trống** (ngân sách an toàn duy trì ở mức 113 GB).
+  - Dự án hiện sử dụng **Google Drive for desktop (gói 5 TB, chế độ Stream, ổ `G:`)** cho lưu trữ nguội (ArtSource, backup, archive build).
+  - **Quy tắc bắt buộc từ doc 05:** Tuyệt đối **KHÔNG** tạo project GASP hay đặt DDC vào ổ Google Drive `G:` (client đồng bộ cloud sẽ khóa hoặc xung đột file).
+  - Phương án đề xuất: Tạo project GASP tạm thời trên một thư mục tạm trên ổ C:, sau khi migrate các asset cần thiết vào `Unreal/Content` thì xóa project mẫu tạm thời để giải phóng dung lượng.
+- **Hành động kiểm chứng (Con người):** Xem trực tiếp dung lượng file download hiển thị tại dialog của Epic Games Launcher khi bấm tải về.
+- **Nguồn:**
+  - [Fab Listing: Game Animation Sample](https://www.fab.com/listings/880e319a-a59e-4ed2-b268-b32dac7fa016) *(Trang listing chính thức trên Fab; không công bố dung lượng file tải)*
 
 ---
 
@@ -97,42 +100,43 @@ Theo hướng dẫn của Epic và thực tiễn cộng đồng, quy trình th�
 
 ## 6. Phân tích Skeleton của GASP
 - **Tên asset Skeleton:** `UEFN_Mannequin` (nằm tại thư mục `Content/Characters/UEFN_Mannequin/`).
-- **Cấu trúc xương:** Dựa trên cấu trúc xương chuẩn của UE5 Mannequin (Pelvis, Spine, Clavicle, Limbs, các xương IK `ik_foot_root`, `ik_hand_root`...).
-- **Trạng thái tương thích:** **[CHƯA XÁC MINH TRỰC TIẾP TRONG EDITOR]**
-  - **Sự thật đã biết:** `UEFN_Mannequin` là một asset skeleton riêng biệt, không phải cùng một asset file `SK_Mannequin` mặc định của UE5. Trong project GASP, Epic cung cấp sẵn IK Retargeter (`RTG_UEFN_to_UE5` và `RTG_UEFN_to_UE4`), điều này cho thấy có sự khác biệt nhất định về bind pose, bone proportions hoặc danh sách twist bones giữa 2 hệ xương.
-  - **Kết luận cần đính chính:** Nhận định trước đây cho rằng *"hoàn toàn đồng nhất 100% và mesh Blender theo SK_Mannequin có thể gắn trực tiếp không cần retarget"* là **chưa được kiểm chứng thực tế trong Unreal Editor 5.8**.
+- **Cấu trúc xương:** Dựa trên cấu trúc xương của UE5 Mannequin (Pelvis, Spine, Clavicle, Limbs, các xương IK `ik_foot_root`, `ik_hand_root`...).
+- **Trạng thái tương thích & Retargeter:** **[CHƯA XÁC MINH TRỰC TIẾP TRONG EDITOR]**
+  - **Sự thật đã xác minh:** GASP sử dụng asset skeleton có tên `UEFN_Mannequin` nằm tại thư mục `Characters/UEFN_Mannequin/` (thay vì file `SK_Mannequin` mặc định của mẫu Third Person).
+  - **Điểm CHƯA XÁC MINH:**
+    - Chưa xác minh tên cụ thể của các file IK Rig / IK Retargeter trong project GASP (các tên giả định như `RTG_UEFN_to_UE5` hay `RTG_UEFN_to_UE4` hoàn toàn **chưa có nguồn tài liệu chính thức xác nhận**).
+    - Chưa xác minh mức độ sai khác về bind pose, bone proportions, hay danh sách twist bones giữa `UEFN_Mannequin` và `SK_Mannequin` chuẩn UE5.
+    - Cả hai kết luận trước đây ("khớp 100% gắn mesh không cần retarget" HOẶC "chắc chắn có sẵn asset Retargeter RTG_UEFN_to_UE5") đều là suy đoán chưa được kiểm chứng trong Editor.
   - **Hành động kiểm chứng (Con người):**
-    1. Khi tải project GASP, mở asset skeleton `UEFN_Mannequin` và kiểm tra bone tree so với `SK_Mannequin`.
-    2. Kiểm tra asset `RTG_UEFN_to_UE5` có sẵn trong GASP: nếu cần, phương án an toàn nhất theo chuẩn của Epic là dùng chính Retargeter này để chuyển toàn bộ locomotion animation sang `SK_Mannequin` của Eclipse thay vì ép dùng chung skeleton asset.
+    1. Khi tải project GASP, mở Content Browser kiểm tra xem Epic có cung cấp sẵn IK Retargeter cho `UEFN_Mannequin` không.
+    2. So sánh asset skeleton `UEFN_Mannequin` với `SK_Mannequin` trong Editor để xác định phương án: gán chung skeleton (Compatible Skeleton) hay tạo IK Retargeter để xuất animation sang `SK_Mannequin` của Eclipse theo quy trình chuẩn của UE5.
 - **Nguồn xác minh:**
-  - [Epic Docs: Adding a MetaHuman to the Game Animation Sample Project](https://dev.epicgames.com/documentation/en-us/unreal-engine/adding-a-metahuman-to-the-game-animation-sample-project-in-unreal-engine)
-  - [Epic Developer Community: IK Rig and Retargeting in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/ik-rig-animation-retargeting-in-unreal-engine)
+  - [Epic Developer Community: IK Rig and Retargeting in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/ik-rig-animation-retargeting-in-unreal-engine) *(Tài liệu nguyên lý quy trình Retarget trong UE5; không liệt kê tên asset cụ thể của GASP)*
+  - [Epic Docs: Game Animation Sample Project Walkthrough](https://dev.epicgames.com/documentation/en-us/unreal-engine/game-animation-sample-project-in-unreal-engine)
 
 ---
 
 ## 7. Đánh giá Hiệu năng & Chi phí CPU (Motion Matching)
-- **Trạng thái:** **[CHƯA XÁC MINH TRÊN MÁY DEV / UE 5.8 - SỐ LIỆU THAM KHẢO TỪ PROFILING CỘNG ĐỒNG]**
-- **Số liệu tham khảo (từ các bài thuyết trình kỹ thuật Unreal Fest & profiling cộng đồng):**
-  - Chi phí Pose Selection trên Worker Thread: Dao động khoảng **~0.10 ms – 0.50 ms / character / frame** (tùy thuộc vào số channels trong `PoseSearchSchema` và số poses trong database).
-  - So sánh: Bước tìm kiếm pose đắt hơn nhiều so với việc đánh giá State Machine đơn giản (~0.008 ms), nhưng tổng chi phí worker thread cho toàn bộ pipeline animation (bao gồm cả blending, procedural IK) thường ở mức tương đương (~0.4 – 0.6 ms) vì Motion Matching giảm bớt các node xử lý phức tạp khác.
+- **Trạng thái:** **[CHƯA XÁC MINH - KHÔNG CÓ NGUỒN BENCHMARK CHÍNH THỨC CHO UE 5.8]**
+  - Epic Games không công bố bảng số liệu benchmark cố định (mili-giây) cho Pose Search trong tài liệu chính thức.
+  - **Số liệu thảo luận cộng đồng (chưa kiểm chứng):** Khoảng ~0.10 ms – 0.50 ms / frame trên Worker Thread cho Pose Selection (so với ~0.008 ms của State Machine đơn giản) chỉ là các con số thảo luận trong các bài chia sẻ kinh nghiệm cộng đồng dev UE5, phụ thuộc mạnh vào cấu hình máy, kích thước database và số channel trong schema.
 - **Rủi ro kỹ thuật cho Eclipse:**
-  - Chưa có benchmark thực tế trên CPU của máy dev (Intel Core i7-13620H) với phiên bản UE 5.8.
-  - Mục tiêu hiệu năng ([05_HARDWARE_AND_DISK.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/05_HARDWARE_AND_DISK.md)): **Game thread $\le$ 6 ms**. Nếu spawn 5–10 AI Enemy đồng thời đều chạy Pose Search không kiểm soát, worker thread và game thread có thể bị nghẽn.
-- **Biện pháp tối ưu đề xuất (dựa trên tài liệu Epic):**
-  1. Phân vùng Database bằng **Chooser Table** (chỉ query database nhỏ tương ứng với Gait hiện tại).
+  - Máy dev dùng CPU Intel Core i7-13620H (10C/16T). Mục tiêu [05_HARDWARE_AND_DISK.md](file:///C:/Users/ADMIN/Downloads/GAME_TEST/docs/05_HARDWARE_AND_DISK.md) là **Game thread $\le$ 6 ms**.
+  - Không thể giả định hiệu năng an toàn dựa trên số liệu thảo luận khi chưa profile thực tế trên máy dev, đặc biệt khi spawn 5–10 AI Enemy đồng thời.
+- **Biện pháp tối ưu đề xuất (từ tài liệu tối ưu của Epic):**
+  1. Phân vùng Database bằng **Chooser Table** (chỉ query database nhỏ tương ứng với trạng thái hiện tại).
   2. Bật **Animation Update Rate Optimization (URO)** để giảm tần suất tick animation của enemy ở xa.
-  3. Sử dụng Database LOD hoặc chuyển AI quái thường sang State Machine truyền thống / Inertialization.
-- **Hành động kiểm chứng (Tier A / Con người):** Dùng công cụ **Unreal Insights** (kênh `Cpu`, `Animation`, `PoseSearch`) trực tiếp trên máy dev khi triển khai 1 Player và 3–5 Enemy để đo đạc thông số thực tế trước khi chốt kiến trúc locomotion cho AI.
+  3. Sử dụng Database LOD hoặc chuyển AI quái thường sang State Machine truyền thống.
+- **Hành động kiểm chứng (Tier A / Con người):** Bắt buộc dùng **Unreal Insights** (kênh `Cpu`, `Animation`) trực tiếp trên máy dev khi tích hợp locomotion để đo đạc thông số thực tế trước khi chốt kiến trúc cho AI.
 - **Nguồn xác minh:**
-  - [Epic Docs: Animation Debugging and Optimization in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-debugging-and-optimization-in-unreal-engine)
-  - [Epic Games Presentation: Motion Matching in Unreal Engine 5 (Unreal Fest)](https://dev.epicgames.com/community/learning)
+  - [Epic Docs: Animation Debugging and Optimization in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-debugging-and-optimization-in-unreal-engine) *(Tài liệu chính thức về công cụ và phương pháp tối ưu URO/LOD; không đưa ra số liệu benchmark mili-giây cố định)*
 
 ---
 
 ## 8. Khuyến nghị cho Eclipse (≤ 10 dòng)
 1. **Dùng GASP cho Player Locomotion:** Hướng đi đúng (ADR-007), miễn phí bản quyền thương mại theo Fab Standard License.
-2. **Kiểm tra Skeleton trong Editor:** Mở `UEFN_Mannequin` kiểm tra; ưu tiên dùng IK Retargeter `RTG_UEFN_to_UE5` có sẵn để xuất animation sang `SK_Mannequin` chuẩn của Eclipse thay vì ép dùng chung asset.
-3. **Không tải trực tiếp vào repo:** Tải GASP về thư mục tạm/ổ ngoài để bảo vệ dung lượng SSD ~113 GB còn lại (ADR-009).
+2. **Kiểm tra Skeleton trong Editor:** Mở asset `UEFN_Mannequin` trong Editor để kiểm tra cấu trúc; xác định xem có sẵn Retargeter hay cần tạo IK Retargeter sang `SK_Mannequin` của Eclipse.
+3. **Không tạo project hay lưu cache trên Google Drive:** Tạo project GASP tạm trên ổ C: để migrate, không lưu trữ trên Google Drive Stream `G:` (tránh lỗi đồng bộ cloud theo ADR-009 và doc 05).
 4. **Chỉ migrate locomotion cốt lõi:** Chỉ lấy `ABP_SandboxCharacter`, Chooser Table và database locomotion; không migrate Mover hay Traversal.
 5. **Chỉ bật 7 plugin cốt lõi:** Bật 7 plugin nhóm 4A trong `Eclipse.uproject`.
 6. **Benchmark hiệu năng bằng Unreal Insights:** Không áp dụng Motion Matching cho quái thường nếu chưa profile thực tế trên máy dev; dự phòng dùng State Machine + URO cho Enemy.

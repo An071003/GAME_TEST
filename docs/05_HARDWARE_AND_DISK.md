@@ -6,7 +6,8 @@
 | CPU | i7-13620H 10C/16T | Build C++ ổn; shader compile lần đầu lâu (~30–90 phút) |
 | GPU | RTX 4050 Laptop **6 GB VRAM** | Giới hạn chính cho Lumen/Nanite/texture trong Editor |
 | RAM | 32 GB | Đủ |
-| Ổ | 1× NVMe 512 GB, **còn ~113 GB** | Giới hạn chính cho scope |
+| Ổ | 1× NVMe 512 GB (C: hiển thị 450 GB), **còn ~148 GB** (đo 2026-09-30, sau khi tạo project `Unreal/` 4.5 GB) | Giới hạn chính cho scope. Ngân sách §2 vẫn tính theo mức 113 GB để giữ biên an toàn |
+| Google Drive | `G:` (Drive for desktop, Stream), gói 5 TB | Ổ `G:` báo 450 GB / còn ~140 GB vì dùng chung dung lượng C: cho cache; dung lượng thật nằm trên cloud |
 | UE | 5.8 (launcher) tại `C:\Program Files\Epic Games\UE_5.8` | |
 | Blender | 4.5 | Kế hoạch gốc ghi 5.x — dùng 4.5 cho tới khi có lý do nâng |
 | VS | Community 2026 (18.10.3), workload "Game development with C++" đã cài. MSVC **14.51.36231** (không nằm trong Preferred của UE 5.8 nhưng không bị Banned, ≥ Minimum 14.38.33130). Windows SDK 10.0.26100.0 | Chờ T-003 build xác nhận. Nếu lỗi toolchain: cài `Microsoft.VisualStudio.Component.VC.14.50.18.0.x86.x64` (Preferred 14.50.35717+) song song |
@@ -35,12 +36,13 @@ Quy tắc:
 
 ## 3. ArtSource
 - Đặt trong thư mục Google Drive (Stream, xem §2), **không** trong git repo.
+- Vị trí: `G:\My Drive\Eclipse\ArtSource` (nguồn art), `G:\My Drive\Eclipse\Backups` (zip project, `git bundle`), `G:\My Drive\Eclipse\Builds` (archive build đã nén).
 - Cấu trúc giữ như kế hoạch gốc: `ArtSource/Blender/{Characters,Enemies,Bosses,Weapons,Architecture,Props}`.
 - Chỉ file export (FBX) đi vào Unreal; file FBX có thể xoá sau khi import thành công (luôn export lại được từ .blend).
 
 ## 4. Remote / backup
 - GitHub có hạn mức Git LFS (kiểm tra hạn mức hiện tại trước khi dùng); dự án này sẽ vượt nhanh.
-- Remote: GitHub hoặc Azure DevOps / dịch vụ có LFS lớn — quyết định ở T-002. **Không** dùng thư mục Google Drive làm bare repo remote.
+- Remote (chủ dự án chốt 2026-09-30): GitHub `https://github.com/An071003/GAME_TEST.git` (remote `origin`). Hạn mức LFS của GitHub nhỏ → theo dõi dung lượng LFS; nếu vượt thì chuyển sang Azure DevOps / dịch vụ có LFS lớn. **Không** dùng thư mục Google Drive làm bare repo remote.
 - Backup định kỳ lên Drive: `git bundle create ... --all` + zip project (loại `Intermediate`, `DerivedDataCache`, `Saved`, `Binaries`).
 
 ## 5. GPU / rendering (6 GB VRAM)

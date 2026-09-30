@@ -3,7 +3,9 @@
 ## 1. Đội hình
 | Vai | Model | Điểm mạnh | Điểm yếu | Giao việc gì |
 |---|---|---|---|---|
-| **Tier A — Lead / Architect / Reviewer** | Claude Opus 5.5 (việc khó) / sonnet 5.5 (việc vừa) | Suy luận, kiến trúc, debug, review | Tốn chi phí/quota hơn | Thiết kế, C++ lõi, bug khó, review, viết task card |
+| **Tier A — Lead / Architect / Reviewer** | Claude Opus 5.5 | Suy luận, kiến trúc, debug, review | Tốn chi phí/quota hơn | Thiết kế, C++ lõi, bug khó, review, viết task card. Sở hữu tài liệu kiến trúc |
+| **Tier A — Lead dự phòng** | Claude Sonnet 5.5 | Như Opus, rẻ hơn | Kém Opus ở bài toán rất khó | Thay Opus khi Opus hết quota / không hoạt động; cũng làm việc Tier A mức vừa |
+| **Tier A — Hard-task engineer** | GPT 6.1 (extra high) | Suy luận mạnh, góc nhìn thứ hai | Chưa quen luật repo → phải có task card | C++ lõi theo task card, bug khó, review chéo code của Claude. Không sửa tài liệu kiến trúc (chỉ đề xuất) |
 | **Tier B — Implementer** | GPT Luna 6 (extra high) | Viết nhiều, nhanh | Suy luận/logic yếu, dễ "tự sáng tạo" | Điền `.cpp` theo `.h` có sẵn, script Python, config, doc hướng dẫn |
 | **Tier B — Implementer / Auditor** | Gemini Flash 3.8 (high) | Nhanh, context dài | Suy luận yếu | Audit toàn repo, dữ liệu (CSV/JSON), doc, tóm tắt tài liệu Epic |
 | **Tier I — Image** | GPT 6.1 Sol (extra high) | Tạo ảnh | — | Concept, reference sheet, icon, mood board |
@@ -64,6 +66,8 @@ TODO ──(được giao)──> IN_PROGRESS ──(handoff)──> REVIEW ─�
 - [ ] Khớp tiêu chí hoàn thành của task card?
 - [ ] Có API nào bịa / không tồn tại trong UE 5.8?
 
+**Review chéo Tier A:** code lõi do GPT 6.1 viết → Claude review; code lõi do Claude viết mà rủi ro cao (damage execution, save, input buffer) → có thể nhờ GPT 6.1 review. Không ai tự duyệt code của chính mình.
+
 ## 6. Cách ra lệnh cho từng model (copy-paste)
 ### Cho Tier B (GPT Luna / Gemini Flash)
 ```
@@ -88,6 +92,20 @@ Chạy build. Kết luận APPROVED hoặc CHANGES_REQUESTED kèm danh sách s�
 Đọc docs/00_MASTER_PLAN.md và docs/tasks/BACKLOG.md. Tách milestone Mx thành task card.
 Gán tier theo docs/02_TEAM_WORKFLOW.md §2. Với task Tier B: viết sẵn header và tiêu chí kiểm tra được.
 ```
+
+### Cho GPT 6.1 (extra high) — việc khó
+```
+Bạn là Tier A hard-task engineer trong repo này.
+1. Đọc AGENTS.md, docs/DECISIONS.md, docs/01_ARCHITECTURE.md.
+2. Đọc task card docs/tasks/T-XXX-*.md và mọi tài liệu trong mục "Đọc trước".
+3. Làm đúng task card, build theo AGENTS.md §4.
+4. Không sửa docs/01_ARCHITECTURE.md, docs/DECISIONS.md, *.Build.cs, .uproject, EclipseGameplayTags.*.
+   Cần đổi → ghi đề xuất vào DECISIONS.md mục "Đề xuất chờ duyệt".
+5. Điền Handoff, đổi Status thành REVIEW. Claude sẽ review chéo.
+```
+
+### Khi Opus không hoạt động
+Mở Claude Code, chọn Sonnet 5.5 (`/model`), dùng đúng các lệnh ở trên. Sonnet có mọi quyền của Lead.
 
 ### Cho GPT Sol — ảnh
 Xem `06_ART_PIPELINE.md` §5.

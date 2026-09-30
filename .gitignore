@@ -1,0 +1,28 @@
+# Unreal generated
+Unreal/Binaries/
+Unreal/DerivedDataCache/
+Unreal/Intermediate/
+Unreal/Saved/
+Unreal/Build/
+Unreal/Plugins/*/Binaries/
+Unreal/Plugins/*/Intermediate/
+Unreal/.vs/
+Unreal/*.sln
+Unreal/*.VC.db
+Unreal/*.opensdf
+Unreal/*.sdf
+Unreal/*.suo
+Unreal/*.xcodeproj
+Unreal/*.xcworkspace
+Unreal/.vsconfig
+# IDE / OS
+.vs/
+.vscode/
+.idea/
+*.DotSettings.user
+Thumbs.db
+Desktop.ini
+.DS_Store
+# Art source lives outside the repo (ADR-009)
+ArtSource/
+*.blend1

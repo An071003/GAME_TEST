@@ -58,3 +58,7 @@ Lưu ý: Scalability của Editor là thiết lập người dùng (lưu ngoài 
 
 ---
 ## Handoff
+
+## Xác nhận (2026-10-01)
+- Human: đã đóng Editor, tắt zenserver, mở Eclipse, đặt Scalability = High.
+- Claude: `zenserver.log` Command line có `--gc-disksize-softlimit 26843545600` (25 GB) và `--gc-low-diskspace-threshold 32212254720` (30 GB).

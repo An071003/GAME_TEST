@@ -16,7 +16,7 @@
 | Mục | Trần | Ghi chú |
 |---|---|---|
 | Dự trữ cho Windows/update | 20 GB | Không bao giờ dùng |
-| DDC / Zen local cache | 25 GB | Đặt giới hạn (T-004). Xoá được, sẽ build lại |
+| DDC / Zen local cache | 25 GB | Zen dùng chung mọi project, nằm ở `%LOCALAPPDATA%\UnrealEngine\Common\Zen\Data` (đo 2026-10-01: 1.3 GB). Trần mềm 25 GB đặt bằng `--gc-disksize-softlimit` trong `DefaultEngine.ini` (T-004; chờ xác nhận sau khi Zen khởi động lại). Xoá được, sẽ build lại. Mỗi project còn có `DerivedDataCache/` riêng (project GASP: 1.6 GB) |
 | `Unreal/Content` | 25 GB đến Vertical Slice | GASP + vài pack Fab đã có thể 5–10 GB — chọn lọc |
 | `.git` + LFS objects | ≈ bằng Content | LFS lưu **thêm một bản** mỗi binary |
 | Intermediate / Binaries / Saved | 10 GB | Không commit |

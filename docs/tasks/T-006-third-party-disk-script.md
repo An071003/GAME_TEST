@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | TODO |
+| Status | REVIEW |
 | Milestone | M0 |
 | Tier | B |
 | Gợi ý model | Gemini Flash 3.8 hoặc GPT Luna 6 |
@@ -60,21 +60,38 @@ Yêu cầu:
 - Line ending LF (`.gitattributes` đã ép `*.sh eol=lf`).
 
 ## Tiêu chí hoàn thành (kiểm tra được)
-- [ ] `bash Tools/check_disk.sh; echo "exit=$?"` chạy trong Git Bash từ root repo → in đủ 9 dòng + dòng dung lượng trống, `exit=0` (máy hiện còn > 100 GB).
-- [ ] Chạy từ thư mục khác: `cd /c && bash /c/Users/ADMIN/Downloads/GAME_TEST/Tools/check_disk.sh` → kết quả giống hệt.
-- [ ] `grep -nE 'rm |mv |> ' Tools/check_disk.sh` → **không có kết quả** (script chỉ đọc).
-- [ ] `docs/THIRD_PARTY.md` có đúng 10 cột và 1 dòng GASP.
-- [ ] `git diff --stat main` chỉ có 3 file: `docs/THIRD_PARTY.md`, `Tools/check_disk.sh`, task card này.
+- [x] `bash Tools/check_disk.sh; echo "exit=$?"` chạy trong Git Bash từ root repo → in đủ 9 dòng + dòng dung lượng trống, `exit=0` (máy hiện còn > 100 GB).
+- [x] Chạy từ thư mục khác: `cd /c && bash /c/Users/ADMIN/Downloads/GAME_TEST/Tools/check_disk.sh` → kết quả giống hệt.
+- [x] `grep -nE 'rm |mv |> ' Tools/check_disk.sh` → **không có kết quả** (script chỉ đọc).
+- [x] `docs/THIRD_PARTY.md` có đúng 10 cột và 1 dòng GASP.
+- [x] `git diff --stat main` chỉ có 3 file: `docs/THIRD_PARTY.md`, `Tools/check_disk.sh`, task card này.
 - Build C++: không áp dụng.
 
 ## Câu hỏi / Blocker
-_(ghi vào đây nếu dừng)_
+_Không có_
 
 ---
 ## Handoff (agent điền khi xong)
 - File đã sửa/tạo:
+  - `docs/THIRD_PARTY.md` (tạo mới)
+  - `Tools/check_disk.sh` (tạo mới)
+  - `docs/tasks/T-006-third-party-disk-script.md` (cập nhật)
 - Output thật của `bash Tools/check_disk.sh` (dán nguyên văn):
+```
+0        /c/Users/ADMIN/Downloads/GAME_TEST/Unreal/Content
+1.9M     /c/Users/ADMIN/Downloads/GAME_TEST/Unreal/DerivedDataCache
+2.7G     /c/Users/ADMIN/Downloads/GAME_TEST/Unreal/Intermediate
+3.9M     /c/Users/ADMIN/Downloads/GAME_TEST/Unreal/Saved
+60M      /c/Users/ADMIN/Downloads/GAME_TEST/Unreal/Binaries
+451K     /c/Users/ADMIN/Downloads/GAME_TEST/.git (tổng)
+4.0K     /c/Users/ADMIN/Downloads/GAME_TEST/.git/lfs
+1.3G     C:\Users\ADMIN\AppData\Local/UnrealEngine/Common/Zen/Data (đường dẫn CHƯA XÁC MINH, xem T-004)
+42M      C:\Users\ADMIN\AppData\Local/Google/DriveFS
+C:              450G  304G  146G  68% /c
+```
 - Chưa làm / CHƯA XÁC MINH:
+  - Đường dẫn Zen Data (`%LOCALAPPDATA%\UnrealEngine\Common\Zen\Data`) hiện đo được 1.3G nhưng chờ T-004 xác minh chính thức từ engine config/code.
+  - Các trường chi tiết của GASP (License, URL, size, v.v.) trong `docs/THIRD_PARTY.md` chờ T-008 xác minh và điền bổ sung.
 
 ## Review (Tier A điền)
 - Kết luận:

@@ -26,7 +26,8 @@ Unreal/Source/
     ├── Inventory/     # item/weapon definitions, inventory & equipment components
     ├── World/         # rest point, fog gate, interactables, pickups, world state
     ├── Save/          # SaveGame, save subsystem
-    └── UI/            # widget base C++, HUD view models
+    ├── UI/            # widget base C++, HUD view models
+    └── Tests/         # automation test (WITH_DEV_AUTOMATION_TESTS); Tests/ được include mọi tầng; không ai include Tests/
 ```
 Mỗi thư mục có `Public/`-style header ngay cạnh `.cpp` (đơn giản hoá; một module nên không cần tách Public/Private).
 

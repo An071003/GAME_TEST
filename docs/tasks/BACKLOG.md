@@ -12,7 +12,7 @@ Task có card chi tiết được link. Task khác sẽ được Tier A viết c
 | [T-004](T-004-ddc-scalability.md) | Giới hạn Zen/DDC cache, editor scalability High, ghi số liệu vào `05_HARDWARE_AND_DISK.md` | A → H | T-003 | TODO |
 | [T-005](T-005-gasp-research.md) | Nghiên cứu GASP 5.8 | B (Gemini) | — | APPROVED (kèm đính chính) → chờ merge |
 | [T-006](T-006-third-party-disk-script.md) | `docs/THIRD_PARTY.md` + `Tools/check_disk.sh` | B (Gemini) | T-002 | TODO |
-| T-007 | Mood board + tone art direction (4–6 ảnh) cho khu dungeon đầu tiên | I | — | TODO |
+| [T-007](T-007-dungeon01-moodboard.md) | Mood board + tone art direction (4–6 ảnh) cho khu dungeon đầu tiên | I | — | TODO |
 | [T-008](T-008-gasp-inspect.md) | Tạo project GASP tạm, kiểm chứng plugin/skeleton/trajectory/dung lượng → đề xuất ADR-006 | H + A | T-005 | TODO |
 
 **M0 xong khi:** T-003, T-005 merge; T-004 xong; T-008 có quyết định skeleton. (T-006, T-007 không chặn M1.)

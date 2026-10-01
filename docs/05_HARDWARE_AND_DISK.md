@@ -16,7 +16,7 @@
 | M·ª•c | Tr·∫ßn | Ghi ch√∫ |
 |---|---|---|
 | D·ª± tr·ªØ cho Windows/update | 20 GB | Kh√¥ng bao gi·ªù d√πng |
-| DDC / Zen local cache | 25 GB | ƒê·∫∑t gi·ªõi h·∫°n (T-004). Xo√° ƒë∆∞·ª£c, s·∫Ω build l·∫°i |
+| DDC / Zen local cache | 25 GB | Zen d√πng chung m·ªçi project, n·∫±m ·ªü `%LOCALAPPDATA%NREALENGINECOMMONZENDATA` (ƒëO 2026-10-01: 1.3 GB). TR¡∫ßN M¡ªÅM 25 GB ƒë¡∫∑T B¡∫±NG `--GC-DISKSIZE-SOFTLIMIT` TRONG `DEFAULTENGINE.INI` (T-004; CH¡ªù X√°C NH¡∫≠N SAU KHI ZEN KH¡ªüI ƒë¡ªôNG L¡∫°I). XO√° ƒë∆∞¡ª£C, S¡∫Ω BUILD L¡∫°I. M¡ªóI PROJECT C√≤N C√≥ `DERIVEDDATACACHE/` RI√™NG (PROJECT GASP: 1.6 GB) |
 | `Unreal/Content` | 25 GB ƒë·∫øn Vertical Slice | GASP + v√†i pack Fab ƒë√£ c√≥ th·ªÉ 5‚Äì10 GB ‚Äî ch·ªçn l·ªçc |
 | `.git` + LFS objects | ‚âà b·∫±ng Content | LFS l∆∞u **th√™m m·ªôt b·∫£n** m·ªói binary |
 | Intermediate / Binaries / Saved | 10 GB | Kh√¥ng commit |

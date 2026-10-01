@@ -55,7 +55,7 @@ if [ -n "$LOCAL_APP" ]; then
 else
     ZEN_PATH=""
 fi
-print_entry "$ZEN_PATH" "(đường dẫn CHƯA XÁC MINH, xem T-004)"
+print_entry "$ZEN_PATH" "(Zen DDC, trần 25 GB - T-004)"
 
 # 9. Google Drive cache
 if [ -n "$LOCAL_APP" ]; then

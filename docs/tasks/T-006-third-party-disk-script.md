@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | REVIEW |
+| Status | DONE |
 | Milestone | M0 |
 | Tier | B |
 | Gợi ý model | Gemini Flash 3.8 hoặc GPT Luna 6 |
@@ -94,5 +94,5 @@ C:              450G  304G  146G  68% /c
   - Các trường chi tiết của GASP (License, URL, size, v.v.) trong `docs/THIRD_PARTY.md` chờ T-008 xác minh và điền bổ sung.
 
 ## Review (Tier A điền)
-- Kết luận:
-- Yêu cầu sửa:
+- Kết luận: **PASS** (Claude, 2026-10-01). Chạy lại script từ root repo và từ `/c`: đủ 9 dòng + dòng ổ đĩa, `exit=0`; grep `rm |mv |> ` không ra gì; bảng 10 cột, 1 dòng GASP; `git diff --stat main...` đúng 3 file. Script khớp spec, handoff trung thực (không bịa số).
+- Lead tự chỉnh khi merge: bỏ ghi chú "CHƯA XÁC MINH" của đường dẫn Zen (đã xác minh ở T-004); điền dòng GASP bằng số đã biết (ngày tải, dung lượng); URL + license vẫn chờ chủ dự án chép từ trang Fab.

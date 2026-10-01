@@ -22,8 +22,8 @@ Task có card chi tiết được link. Task khác sẽ được Tier A viết c
 |---|---|---|---|---|
 | [T-010](T-010-core.md) | `Core/`: `EclipseGameplayTags`, 4 interface, `EclipseTypes`, `UEclipseEventSubsystem` + test | A | T-003 | REVIEW (chờ Human xác nhận tag) |
 | [T-011](T-011-abilities-base.md) | `Abilities/`: ASC, `UEclipseCombatAttributeSet`, `UEclipseGameplayAbility` base + test | A | T-010 | TODO |
-| [T-012](T-012-character-headers.md) | Header + `.cpp` khung: CharacterBase, PlayerCharacter, PlayerController, GameMode, GameInstance, InputConfig; viết card T-013 | A | T-011 | TODO |
-| T-013 | Thân hàm `.cpp` cho các class T-012 theo comment `// T-013:` | B (GPT Luna) | T-012 | card viết trong T-012 |
+| [T-012](T-012-character-headers.md) | Header + `.cpp` khung: CharacterBase, PlayerCharacter, PlayerController, GameMode, GameInstance, InputConfig; viết card T-013 | A | T-011 | REVIEW |
+| T-013 | Thân hàm `.cpp` cho các class T-012 theo comment `// T-013:` | B (GPT Luna) | T-012 | TODO — card `T-013-character-cpp.md` sẵn sàng (sau khi T-012 merge) |
 | [T-014](T-014-input-assets-script.md) | Script Python tạo 11 `IA_*` + `IMC_Gameplay` (bước 0: Lead bật PythonScriptPlugin) | A → B (GPT Luna) → H | T-003 | TODO |
 | T-015 | Migrate GASP locomotion vào project + hook vào `BP_CH_Player`; đo CPU Motion Matching bằng Insights (spike phương án B: retarget runtime, ngưỡng Game thread > 3 ms ở High ngoài Editor) | H (A viết hướng dẫn) | T-008, T-013 | TODO |
 | T-016 | Stamina regen (GE periodic + delay tag) + Sprint ability | A | T-011 | TODO |

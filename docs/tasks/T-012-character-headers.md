@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | TODO |
+| Status | REVIEW |
 | Milestone | M1 |
 | Tier | A |
 | Gợi ý model | Opus 5.5 |
@@ -31,10 +31,15 @@ Các class gameplay chính có header hoàn chỉnh (UPROPERTY, UFUNCTION, comme
 - Không làm: input buffer (M2), lock-on (T-017), camera tuning (T-019).
 
 ## Tiêu chí hoàn thành (kiểm tra được)
-- [ ] Build PASS.
-- [ ] Mọi hàm có placeholder đều có comment `// T-013:` mô tả hành vi mong đợi; `grep -rn "T-013:" Unreal/Source` ra danh sách công việc của T-013.
-- [ ] Checklist review `02_TEAM_WORKFLOW.md` §5 tự kiểm.
-- [ ] Card `T-013-character-cpp.md` đã viết, liệt kê chính xác từng hàm cần điền.
+- [x] Build PASS.
+- [x] Mọi hàm có placeholder đều có comment `// T-013:` mô tả hành vi mong đợi; `grep -rn "T-013:" Unreal/Source` ra danh sách công việc của T-013.
+- [x] Checklist review `02_TEAM_WORKFLOW.md` §5 tự kiểm.
+- [x] Card `T-013-character-cpp.md` đã viết, liệt kê chính xác từng hàm cần điền.
 
 ---
 ## Handoff
+- Files: `Characters/EclipseCharacterBase|PlayerCharacter|PlayerController|InputConfig` (.h/.cpp), `Core/EclipseGameMode.h`, `Core/EclipseGameInstance.h`; xoá `Characters/.gitkeep`. Card `T-013-character-cpp.md` đã viết (11 mục, 13 vị trí `// T-013:`).
+- Build `EclipseEditor Win64 Development`: PASS (cảnh báo C4996 `GetMovementBase` nằm trong header engine, không phải code mình).
+- **Lệch card**: `GameMode`/`GameInstance` chỉ có `.h` (class rỗng, không có hàm nào cần `.cpp`). `GameMode` không đặt `DefaultPawnClass`/`PlayerControllerClass` trong C++ vì `Core/` không được include `Characters/` (kiến trúc §3) — Human đặt trên `BP_EclipseGameMode` ở T-020/T-014.
+- InputConfig: `MoveAction`, `LookAction`, `LockOnAction`, `InteractAction` là con trỏ riêng; các IA còn lại (Light/Heavy/Block/Parry/Dodge/Sprint/UseItem) nằm trong mảng `AbilityInputs` với `InputTag` = tag `Ability.*` trùng `InputTag` của ability.
+- Constructor đã tạo sẵn ASC, AttributeSet (outer = Actor), SpringArm, Camera — Tier B không cần đụng.

@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | TODO (chờ bước 0 của Lead) |
+| Status | TODO (bước 0 của Lead đã xong: plugin đã bật trong `.uproject`; còn bước Human bật Developer Mode) |
 | Milestone | M1 |
 | Tier | B (viết script) · A (bước 0, review) · Human (chạy script trong Editor) |
 | Gợi ý model | GPT Luna 6 |

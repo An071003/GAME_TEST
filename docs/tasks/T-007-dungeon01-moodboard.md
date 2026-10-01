@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | TODO |
+| Status | REVIEW |
 | Milestone | M0 (không chặn M1) |
 | Tier | I |
 | Gợi ý model | GPT 6.1 Sol |
@@ -57,20 +57,30 @@ Mọi ảnh dùng **cùng khối `[STYLE]`** trong `06_ART_PIPELINE.md` §5, ch�
 3. Điền Handoff, đổi Status thành `REVIEW`.
 
 ## Tiêu chí hoàn thành (kiểm tra được)
-- [ ] 6 ảnh + 6 file `.txt` có trong `G:\My Drive\Eclipse\ArtSource\Concept\Dungeon01\`, đặt tên đúng bảng.
-- [ ] Phần `[STYLE]` trong 6 file `.txt` giống hệt nhau.
-- [ ] `docs/art/Dungeon01_ArtDirection.md` có đủ 6 mục ở bước 2.
+- [x] 6 ảnh + 6 file `.txt` có trong `G:\My Drive\Eclipse\ArtSource\Concept\Dungeon01\`, đặt tên đúng bảng.
+- [x] Phần `[STYLE]` trong 6 file `.txt` giống hệt nhau.
+- [x] `docs/art/Dungeon01_ArtDirection.md` có đủ 6 mục ở bước 2.
 - [ ] `git diff --stat main` chỉ có `docs/art/Dungeon01_ArtDirection.md` và task card này; không có file `.png`.
 - [ ] Chủ dự án xem và chọn: giữ hướng này / chỉnh / làm lại (ghi ở mục Review).
 
 ## Câu hỏi / Blocker
-_(ghi vào đây nếu dừng)_
+- Tiêu chí `git diff --stat main` chỉ có 2 file chưa đạt do lịch sử branch có sẵn thay đổi T-006 ở `Tools/check_disk.sh`, `docs/THIRD_PARTY.md`, `docs/tasks/BACKLOG.md`, `docs/tasks/T-006-third-party-disk-script.md`. Đã có trước khi làm T-007 (HEAD ban đầu: `ea04098359fc041416a1d6ff6cc227ea392011a7`). Không sửa các file này; Lead cần tách lịch sử branch khi chuẩn bị merge nếu vẫn yêu cầu diff với `main` chỉ có T-007.
 
 ---
 ## Handoff
-- Ảnh đã tạo (đường dẫn):
-- File đã sửa/tạo trong repo:
-- Chưa làm / ghi chú:
+- Ảnh đã tạo: đủ 6 PNG và 6 prompt `.txt` nguyên văn tại `G:\My Drive\Eclipse\ArtSource\Concept\Dungeon01\`: `Dungeon01_Approach_v01`, `Dungeon01_Hall_v01`, `Dungeon01_Corridor_v01`, `Dungeon01_Shortcut_v01`, `Dungeon01_RestPoint_v01`, `Dungeon01_BossArena_v01`. Đường dẫn từng ảnh ghi trong art direction.
+- Công cụ: imagegen tích hợp, một lượt tạo riêng cho mỗi ảnh. Khối `[STYLE]` giữ nguyên văn từ `06_ART_PIPELINE.md` §5; phần chung của các prompt giống nhau, chỉ `[SUBJECT]` và `[VIEW]` thay đổi. File `.txt` không thêm ghi chú hậu xử lý.
+- Hậu xử lý đã được chủ dự án cho phép trong chat: ảnh gốc 1672×941 cắt 4 px mỗi bên, 2 px trên và 3 px dưới thành **1664×936, đúng 16:9**; không đổi nội dung hay co giãn. Bản gốc của công cụ vẫn được giữ ngoài repo.
+- Worktree riêng: checkout chung chuyển sang T-010 trong lúc tạo ảnh; phần tài liệu T-007 được hoàn tất tại `C:\Users\ADMIN\.codex\worktrees\t-007-dungeon01-moodboard\GAME_TEST` trên nhánh `task/T-007-dungeon01-moodboard`.
+- File trong repo: tạo `docs/art/Dungeon01_ArtDirection.md`; cập nhật card này (Status, checklist, Blocker, Handoff). Không có ảnh hoặc prompt trong repo.
+- Build: **N/A** — task chỉ tạo concept và tài liệu, không thay đổi C++/config/asset Unreal; không chạy build.
+- Kiểm tra: PASS cho tên/đủ 12 file, kích thước 6 ảnh, nguyên văn 6 prompt, `[STYLE]` giống hệt nhau; đã xem từng ảnh và kiểm tra bố cục, vật liệu, tuyến đi, Hollow/rest point/Warden. Bảng 7 màu lấy từ pixel ảnh cuối; art direction có đủ 6 mục và không nhúng ảnh.
+- Giới hạn diff: phần làm thêm của T-007 chỉ có 2 file cho phép; diff toàn branch với `main` còn các file T-006 có sẵn nêu ở Blocker. Không tự đổi lịch sử branch.
+- **CHƯA XÁC MINH:** kích thước thật của hành lang/cửa/trần/arena, khoảng trống camera/lock-on và hiệu năng 6 GB VRAM. Concept phối cảnh là tham chiếu cảm giác; các thông số phải kiểm tra bằng greybox và đo trong Editor ở M6/M8. Hollow/Warden là hình tham chiếu placeholder, chưa chốt thiết kế nhân vật.
+- Chưa làm: chủ dự án + Tier A review và chọn giữ/chỉnh/làm lại; để mục Review trống. Không có thao tác Unreal Editor cần làm trong T-007.
+- Việc chủ dự án cần làm:
+  1. Mở thư mục ảnh trên `G:` và xem đủ 6 ảnh cùng trang art direction.
+  2. Chọn giữ hướng này / chỉnh / làm lại, ghi kết luận và yêu cầu cụ thể vào Review.
 
 ## Review (chủ dự án + Tier A)
 - Kết luận:

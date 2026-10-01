@@ -73,7 +73,7 @@ Xem `00_MASTER_PLAN.md`. Thay đổi chính:
 ---
 
 ## Đề xuất chờ duyệt
-### Đề xuất #1 — Cách xử lý skeleton khi dùng GASP (chạm ADR-006) — *chờ chủ dự án chọn* (Claude, 2026-10-01)
+### Đề xuất #1 — Cách xử lý skeleton khi dùng GASP (chạm ADR-006) — **ĐÃ CHỌN: B** (chủ dự án, 2026-10-01; đề xuất bởi Claude)
 **Dữ kiện đã xác minh (T-008, `docs/research/GASP_UE58.md` §9):** GASP chạy trên `UEFN_Mannequin`, khác UE5 Mannequin (thiếu xương corrective/twist, có `props_root`/`contact_*`...). Epic ship sẵn `RTG_UEFN_to_UE5_Mannequin` và `ABP_GenericRetarget` (retarget **lúc chạy**). Project GASP có sẵn cả `SK_Mannequin`/Manny/Quinn.
 
 | Phương án | Ưu | Nhược |
@@ -82,4 +82,4 @@ Xem `00_MASTER_PLAN.md`. Thay đổi chính:
 | **B.** Giữ ADR-006 (UE5 Mannequin cho mesh/art/anim combat), locomotion GASP **retarget runtime** qua `ABP_GenericRetarget` cho **player** | Làm được ngay, giữ pipeline art/Fab; enemy dùng ABP thường không Motion Matching | Tốn CPU thêm cho retarget (chưa đo); chưa rõ montage combat chạy ở skeleton nào (*CHƯA XÁC MINH*) |
 | **C.** Retarget **offline** toàn bộ animation GASP cần dùng sang UE5 Mannequin, dựng lại PSD/PSS/Chooser | Runtime sạch, đúng ADR-006 | Nhiều giờ thao tác Editor, nhân đôi ~1.6 GB animation, dễ hỏng schema |
 
-**Khuyến nghị của Lead:** **B làm thử trước** (spike ở T-015: 1 player, đo Insights, thử chạy 1 montage tấn công). Tiêu chí chuyển phương án: Game thread của player > 3 ms ở Scalability High ngoài Editor → chuyển sang A (nếu art/Fab chấp nhận được) hoặc C. **Chưa đổi ADR-006 cho tới khi spike có số đo.**
+**Quyết định: B, làm thử trước** (spike ở T-015: 1 player, đo Insights, thử chạy 1 montage tấn công). Tiêu chí chuyển phương án: Game thread của player > 3 ms ở Scalability High ngoài Editor → chuyển sang A (nếu art/Fab chấp nhận được) hoặc C. **ADR-006 giữ nguyên.** Nếu spike T-015 vượt ngưỡng thì mở đề xuất mới (A hoặc C) để chủ dự án duyệt lại.

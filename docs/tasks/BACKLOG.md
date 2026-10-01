@@ -13,7 +13,7 @@ Task có card chi tiết được link. Task khác sẽ được Tier A viết c
 | [T-005](T-005-gasp-research.md) | Nghiên cứu GASP 5.8 | B (Gemini) | — | APPROVED (kèm đính chính) → chờ merge |
 | [T-006](T-006-third-party-disk-script.md) | `docs/THIRD_PARTY.md` + `Tools/check_disk.sh` | B (Gemini) | T-002 | TODO |
 | T-007 | Mood board + tone art direction (4–6 ảnh) cho khu dungeon đầu tiên | I | — | TODO |
-| [T-008](T-008-gasp-inspect.md) | Tạo project GASP tạm, kiểm chứng plugin/skeleton/trajectory/dung lượng → đề xuất ADR-006 | H + A | T-005 | TODO |
+| [T-008](T-008-gasp-inspect.md) | Tạo project GASP tạm, kiểm chứng plugin/skeleton/trajectory/dung lượng → đề xuất ADR-006 | H + A | T-005 | REVIEW (chờ chủ dự án chọn skeleton) |
 
 **M0 xong khi:** T-003, T-005 merge; T-004 xong; T-008 có quyết định skeleton. (T-006, T-007 không chặn M1.)
 

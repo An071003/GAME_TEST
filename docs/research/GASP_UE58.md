@@ -142,3 +142,55 @@ Theo hướng dẫn của Epic và thực tiễn cộng đồng, quy trình th�
 4. **Chỉ migrate locomotion cốt lõi:** Chỉ lấy `ABP_SandboxCharacter`, Chooser Table và database locomotion; không migrate Mover hay Traversal.
 5. **Chỉ bật 7 plugin cốt lõi:** Bật 7 plugin nhóm 4A trong `Eclipse.uproject`.
 6. **Benchmark hiệu năng bằng Unreal Insights:** Không áp dụng Motion Matching cho quái thường nếu chưa profile thực tế trên máy dev; dự phòng dùng State Machine + URO cho Enemy.
+
+---
+
+## 9. Kiểm chứng T-008 (Claude, 2026-10-01) — đọc trực tiếp project `C:\UE_Temp\GASP58\GameAnimationSample`
+Phương pháp: đọc `.uproject`, `Config/*.ini`, liệt kê `Content/`, quét name table của `.uasset` (`strings`/`grep`). **Chưa mở Editor để kiểm tra bind pose/bone** → các điểm đánh dấu *CHƯA XÁC MINH* cần làm ở T-015. Nếu mục này mâu thuẫn với §1–§8 thì **mục này đúng**.
+
+### 9.1 Dung lượng (đo thật)
+| Mục | Giá trị |
+|---|---|
+| Project `GameAnimationSample` | **7.2 GB** (`Content` ≈ 6.0 GB) |
+| `Content/Characters` | 4.9 GB — Echo 1.1, **UEFN_Mannequin 2.7**, Paragon 0.75, UE5_Mannequins 0.35, UE4_Mannequin 0.02 |
+| `Content/MetaHumans` / `IsolatedExamples` / `Movies` / `Levels` / `Blueprints` / `Audio` | 301 / 142 / 55 / 40 / 37 / 29 MB |
+| `DerivedDataCache` trong project | 1.6 GB |
+| Zen local cache toàn máy (`%LOCALAPPDATA%\UnrealEngine\Common\Zen\Data`) | 1.3 GB (đường dẫn **đã xác minh**, dùng cho T-004) |
+| Ổ C: trống | 148 GB → **132 GB** sau khi tải + mở project (≈ −16 GB, gồm cả bản tải trong vault) |
+
+Trong `UEFN_Mannequin/Animations` (2.7 GB): Crouch 722 MB, Walk 718, Run 536, Jump 188, Traversal 119, Interactions 109, Sprint 82, Slide 79, Idle 67, còn lại < 50 MB mỗi mục. `MotionMatchingData` chỉ 2.4 MB (data nhỏ, nặng ở animation). Soulslike cần trước: Idle + Walk + Run + Sprint + Jump ≈ **1.6 GB**; Crouch/Traversal/Interactions/Slide bỏ.
+
+### 9.2 Plugin thật
+- `.uproject` GASP bật 21 plugin (AnimationWarping, RigLogic, LiveLink, LiveLinkControlRig, PoseSearch, AnimationLocomotionLibrary, MotionWarping, HairStrands, Chooser, Mover, NetworkPrediction, ChaosMover, AnimationLayering, MoverExamples, MovieSceneAnimMixer, DrawDebugLibrary, SmartObjects, Locomotor, CurveExpression, GameplayInteractions + ModelingToolsEditorMode).
+- **Không có `MotionTrajectory`** → GASP không dùng `CharacterTrajectoryComponent`. `BlendStack` không nằm trong `.uproject` (là dependency của PoseSearch).
+- Name table của `SandboxCharacter_CMC_ABP` chỉ tham chiếu `PoseSearch`, `BlendStack`, `Chooser`-liên quan, `AnimGraphRuntime`. **Không** tham chiếu `AnimationLocomotionLibrary`, `Mover`, `SmartObjects`, `MotionTrajectory` (0 file trong `Blueprints/`, `Rigs/`, `MotionMatchingData/` chứa `/Script/AnimationLocomotionLibrary`).
+- **Kết luận plugin cho Eclipse:** đã bật đủ ở T-003 (`PoseSearch`, `Chooser`, `MotionWarping`, `AnimationWarping`; BlendStack tự theo). **Không cần bật thêm plugin nào** để dùng ABP. `SandboxCharacter_CMC` (character BP) tham chiếu `SmartObjectAnimation`, `GameplayCameras` → **không migrate character BP**, chỉ migrate ABP (xem 9.4).
+
+### 9.3 Trajectory
+ABP gọi `PoseSearchGenerateTransformTrajectory` / `PoseSearchTrajectoryLibrary` / `GenerateTrajectory` (đều trong **PoseSearch**) + `PoseSearchHistoryCollector`. Đính chính §5 bước 6: **không thêm `CharacterTrajectoryComponent`**.
+
+### 9.4 Cấu trúc asset thật (đính chính tên ở §5)
+- Character có **hai biến thể**: `Blueprints/SandboxCharacter_CMC` (+ `SandboxCharacter_CMC_ABP`, dùng `CharacterMovementComponent`) và `SandboxCharacter_Mover` (+ `_Mover_ABP`, dùng Mover). **Eclipse dùng biến thể CMC.** Tên `ABP_SandboxCharacter`/`CBP_Sandbox_Character` trong §5 **không tồn tại** ở project này.
+- ABP giao tiếp với character qua interface `BPI_SandboxCharacter_ABP` / `BPI_SandboxCharacter_Pawn`, enum `E_Gait`, `E_Stance`, `E_MovementMode`, `E_RotationMode`... (`Blueprints/Data/`). Eclipse C++ character phải cấp đúng các dữ liệu này cho ABP → việc của T-015.
+- MM data: `Characters/UEFN_Mannequin/Animations/MotionMatchingData/` gồm 6 Chooser Table `CHT_PoseSearchDatabases{,_Dense,_ExtremeSparse,_Mover,_Relaxed,_Sparse}`, thư mục `Databases/{Dense,Sparse,Extreme_Sparse,Relaxed}`, 21 Schema `PSS_*`, 4 Normalization Set `PSN_*`. Bản CMC dùng `CHT_PoseSearchDatabases` (không hậu tố) — *CHƯA XÁC MINH trong ABP, Migrate dialog sẽ cho thấy*.
+- Retarget: `Blueprints/RetargetedCharacters/ABP_GenericRetarget` + `BP_Manny`, `BP_Quinn`, `BP_Echo`, `BP_Twinblast`, `BP_UE4_Mannequin`. Retargeter có sẵn: **`RTG_UEFN_to_UE5_Mannequin`**, `RTG_UEFN_to_UE4_Mannequin`, `RTG_UEFN_to_Echo`, `RTG_UEFN_to_TwinBlast`, `RTG_UEFN_to_Metahuman_*` (IK Rig tương ứng `IK_*_Retarget`). Gemini đoán `RTG_UEFN_to_UE5` ≈ đúng, tên đầy đủ có hậu tố `_Mannequin`.
+
+### 9.5 Skeleton
+- GASP gồm **cả** `UEFN_Mannequin` (`SK_UEFN_Mannequin`, `SKM_UEFN_Mannequin`) **và** UE5 Mannequin (`SK_Mannequin`, `SKM_Manny`, `SKM_Quinn`) — vậy UE5 Mannequin có sẵn trong project, bản `Simple` cũng có.
+- Hai skeleton **khác nhau**: quét tên bone cho thấy UE5 Mannequin có thêm hàng chục xương corrective/twist (`calf_knee_*`, `clavicle_*_back/down/fwd/up`, `lowerarm_*_fwd/bck`, `foot_*_up/down`...), UEFN có thêm `props_root`, `attach`, `contact_l/r`, `poi`, `face__*_eye_*`. (Quét chuỗi thô, chưa so sánh cây bone trong Editor → *CHƯA XÁC MINH* mức độ chính xác.) Vì vậy GASP cần retarget để chạy trên Manny — đây là lý do Epic ship `RTG_UEFN_to_UE5_Mannequin`.
+- Hệ quả cho **ADR-006**: xem đề xuất trong `DECISIONS.md`.
+
+### 9.6 Hiệu năng đo thật (chủ dự án chụp `stat unit`, Editor PIE, 1 nhân vật, map mặc định, RTX 4050 Laptop)
+Frame 16.67 ms (đang bị khoá 60 FPS) · **Game 7.97 ms** · Draw 4.41 · RHIT 2.57 · **GPU 8.47 ms** · Mem 8.15 GB · VRAM 3.34 / 5.03 GB · RenderRes 92.9 % · Draws 284 · Prims 241 K.
+- Đây là project **chưa tối ưu**, Scalability mặc định `Maximum`, chạy trong Editor (Editor tick + viewport tốn thêm) nên **không phải** số của Eclipse; chỉ để biết thứ tự độ lớn.
+- **Game thread 7.97 ms đã vượt ngân sách 6 ms** (doc 05 §6) chỉ với 1 nhân vật. Chưa rõ bao nhiêu là Motion Matching (không có Insights). Cần đo lại ở T-015 sau khi bỏ debug/Traversal/SmartObjects và ở `Scalability = High`, **ngoài Editor** (Standalone/`-game`).
+- VRAM 3.3/5.0 GB chỉ cho 1 nhân vật + map trống → Eclipse phải dè dặt với texture nhân vật (Echo/Paragon/MetaHuman không nên migrate).
+
+### 9.7 License
+Chủ dự án chưa ghi lại trang license trên Fab (Fab trả 403 cho tool của tôi). **Việc còn lại:** mở trang listing, chép nguyên dòng license vào `docs/THIRD_PARTY.md` (T-006). Lưu ý: `Paragon/TwinBlast`, `Echo`, `MetaHumans/*` có thể kèm điều khoản riêng (CHƯA XÁC MINH — không đọc được trang license). Eclipse không cần chúng nên không migrate.
+
+### 9.8 Khuyến nghị migrate (thay thế §5 và Khuyến nghị 4–5)
+1. Đừng migrate character BP. Viết `AEclipseCharacterBase` (T-012) rồi Migrate **chỉ** `SandboxCharacter_CMC_ABP` và xem **danh sách dependency** trong dialog Migrate trước khi bấm OK (đây là cách xác minh các điểm *CHƯA XÁC MINH*).
+2. Chỉ giữ animation Idle, Walk, Run, Sprint, Jump (≈ 1.6 GB). Nếu Chooser Table kéo cả thư mục khác thì tạo bản `CHT_` + `PSD_` rút gọn riêng (thao tác Editor, ghi vào hướng dẫn T-015).
+3. Giữ GASP gốc ở `C:\UE_Temp\GASP58` tới khi T-015 xong, rồi xoá (giải phóng ~9 GB gồm cả DDC).
+4. Không bật SmartObjects/Mover/GameplayInteractions (ADR-009) — ABP CMC không cần.

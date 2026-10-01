@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | REVIEW (chờ người xác nhận mục Project Settings) |
+| Status | DONE |
 | Milestone | M1 |
 | Tier | A |
 | Gợi ý model | Opus 5.5 |
@@ -44,3 +44,4 @@ Tầng `Core/` tồn tại và build PASS: mọi tag C++ cần ở M1–M2 đư�
 - Phát hiện: `UGameInstanceSubsystem` có `ClassWithin=GameInstance` nên test phải tạo `UGameInstance` làm outer.
 - `FInstancedStruct` nằm trong CoreUObject 5.8 (`StructUtils/InstancedStruct.h`) → không cần thêm module vào `Build.cs`.
 - **Human còn lại**: mở Editor → Project Settings → Project → GameplayTags → thấy các tag `State.*`, `Ability.*`... (nguồn Native). Nhắn "T-010: tag OK".
+- **Human xác nhận (2026-10-01)**: Gameplay Tag Manager hiện đủ `State.Attacking`, `Ability.Attack.Light` (nguồn Native). T-010: tag OK.

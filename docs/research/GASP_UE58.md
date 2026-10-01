@@ -3,6 +3,8 @@
 > **Mã task:** T-005 | **Milestone:** M0 | **Dự án:** Eclipse (UE 5.8)  
 > **Mục đích:** Đánh giá tính khả thi, yêu cầu kỹ thuật và phương án tích hợp locomotion Motion Matching từ Game Animation Sample vào dự án Eclipse.
 
+> ⚠ **Đã review (2026-10-01):** xem mục "Review" trong `docs/tasks/T-005-gasp-research.md` — các đính chính ở đó có hiệu lực cao hơn nội dung bên dưới (plugin §4, trajectory §5, skeleton §6).
+
 ---
 
 ## 1. Bản phát hành cho UE 5.8 & Tên trên Fab

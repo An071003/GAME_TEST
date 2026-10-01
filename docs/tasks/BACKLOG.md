@@ -13,7 +13,7 @@ Task có card chi tiết được link. Task khác sẽ được Tier A viết c
 | [T-005](T-005-gasp-research.md) | Nghiên cứu GASP 5.8 | B (Gemini) | — | APPROVED (kèm đính chính) → chờ merge |
 | [T-006](T-006-third-party-disk-script.md) | `docs/THIRD_PARTY.md` + `Tools/check_disk.sh` | B (Gemini) | T-002 | TODO |
 | T-007 | Mood board + tone art direction (4–6 ảnh) cho khu dungeon đầu tiên | I | — | TODO |
-| [T-008](T-008-gasp-inspect.md) | Tạo project GASP tạm, kiểm chứng plugin/skeleton/trajectory/dung lượng → đề xuất ADR-006 | H + A | T-005 | TODO |
+| [T-008](T-008-gasp-inspect.md) | Tạo project GASP tạm, kiểm chứng plugin/skeleton/trajectory/dung lượng → đề xuất ADR-006 | H + A | T-005 | DONE (chọn phương án B) |
 
 **M0 xong khi:** T-003, T-005 merge; T-004 xong; T-008 có quyết định skeleton. (T-006, T-007 không chặn M1.)
 
@@ -25,7 +25,7 @@ Task có card chi tiết được link. Task khác sẽ được Tier A viết c
 | [T-012](T-012-character-headers.md) | Header + `.cpp` khung: CharacterBase, PlayerCharacter, PlayerController, GameMode, GameInstance, InputConfig; viết card T-013 | A | T-011 | TODO |
 | T-013 | Thân hàm `.cpp` cho các class T-012 theo comment `// T-013:` | B (GPT Luna) | T-012 | card viết trong T-012 |
 | [T-014](T-014-input-assets-script.md) | Script Python tạo 11 `IA_*` + `IMC_Gameplay` (bước 0: Lead bật PythonScriptPlugin) | A → B (GPT Luna) → H | T-003 | TODO |
-| T-015 | Migrate GASP locomotion vào project + hook vào `BP_CH_Player`; đo CPU Motion Matching bằng Insights | H (A viết hướng dẫn) | T-008, T-013 | TODO |
+| T-015 | Migrate GASP locomotion vào project + hook vào `BP_CH_Player`; đo CPU Motion Matching bằng Insights (spike phương án B: retarget runtime, ngưỡng Game thread > 3 ms ở High ngoài Editor) | H (A viết hướng dẫn) | T-008, T-013 | TODO |
 | T-016 | Stamina regen (GE periodic + delay tag) + Sprint ability | A | T-011 | TODO |
 | T-017 | `UEclipseLockOnComponent` header + thuật toán score | A | T-012 | TODO |
 | T-018 | `UEclipseLockOnComponent.cpp` phần FindTargets/LOS/clear (theo header) | B | T-017 | card viết trong T-017 |

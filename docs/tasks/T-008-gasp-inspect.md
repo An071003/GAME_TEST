@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | TODO |
+| Status | DONE (còn 2 mục ghi chép: dung lượng tải + license) |
 | Milestone | M0 |
 | Tier | Human (tải, mở Editor) + A (Claude đọc file trên đĩa, viết kết luận) |
 | Gợi ý model | Bạn + Opus 5.5 |
@@ -63,3 +63,12 @@ _(ghi vào đây nếu dừng)_
 
 ## Review (Tier A điền)
 - Kết luận:
+
+## Kết quả (Claude, 2026-10-01)
+- Dung lượng tải: **CHƯA GHI** (chủ dự án chưa báo số trong Launcher). Project 7.2 GB, ổ C: 148 → 132 GB.
+- License (trang Fab): **CHƯA GHI** — chủ dự án chép dòng license từ trang Fab vào `THIRD_PARTY.md` (T-006).
+- `stat unit` (ảnh chủ dự án gửi): Frame 16.67 / Game 7.97 / Draw 4.41 / GPU 8.47 ms, VRAM 3.34/5.03 GB — chi tiết và hạn chế ở báo cáo §9.6.
+- Báo cáo đầy đủ: `docs/research/GASP_UE58.md` §9. Đề xuất skeleton: `docs/DECISIONS.md` "Đề xuất #1" (chờ chủ dự án chọn).
+- Phát hiện chính: không cần bật plugin thêm; không dùng `CharacterTrajectoryComponent`; migrate chỉ `SandboxCharacter_CMC_ABP`, không migrate character BP; Game thread 7.97 ms đã vượt budget 6 ms (chưa tối ưu, trong Editor).
+- CHƯA XÁC MINH (để T-015): so sánh bone tree trong Editor; dependency thật của ABP trong dialog Migrate; montage combat chạy ở skeleton nào khi dùng retarget runtime; chi phí CPU Motion Matching tách riêng.
+- Quyết định skeleton: **B** (chủ dự án, 2026-10-01) — xem DECISIONS.md Đề xuất #1. Tiêu chí còn thiếu: dung lượng tải + license (đưa vào THIRD_PARTY.md).
